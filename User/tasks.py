@@ -63,7 +63,8 @@ def create_task(dict, separator, stringCharacter, row, row_id):
         print('chay')
         print(row_id)
         print(filename)
-        gen_table_update = Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
+        gen_table_update = Generated_csv.objects.filter(id=row_id)
+        gen_table_update.update(path=filename, status="Ready")
         print(gen_table_update)
         print('chay nogulnan')
         return True
