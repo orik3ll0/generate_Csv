@@ -63,7 +63,8 @@ def create_task(dict, separator, stringCharacter, row, row_id):
         print('chay')
         print(row_id)
         print(filename)
-        Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
+        tebl = Generated_csv.objects.filter(id=row_id)
+        print(tebl)
 
 
         print('chay nogulnan')
