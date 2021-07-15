@@ -211,7 +211,7 @@ LOGIN_URL = 'User:login'
 LOGOUT_REDIRECT_URL = 'User:login'
 
 # CELERY STUFF
-BROKER_URL = 'redis://:pbe691c471072dedc160edb9260f2fffc43e87ee394d3a12b39024aa8aaa2bfd8@ec2-99-80-6-236.eu-west-1.compute.amazonaws.com:17920'
+BROKER_URL = 'redis://redistogo:0548bdaec5933fa6096a62738959e3c3@soapfish.redistogo.com:11443/'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_ACCEPT_CONTENT = ['application/json']
