@@ -24,9 +24,10 @@ def create_task(dict, separator, stringCharacter, row, row_id):
     filename = f'{time.mktime(datetime.now().timetuple())}{row}.csv'        #creating file name
     print('marojna')
     with open(f'static/files/{filename}', 'wt') as csvFile:
+        print('pirojna')
         writer = csv.DictWriter(csvFile, delimiter=separator, quotechar=stringCharacter, quoting=csv.QUOTE_ALL, fieldnames=list_of_headers)
         writer.writeheader()
-
+        print('lokom')
         for i in range(int(row)):
 
             dict_for_writerow = {}
@@ -57,12 +58,14 @@ def create_task(dict, separator, stringCharacter, row, row_id):
                     dict_for_writerow.update({dict[key]['columnName']: fake.date()})
 
             writer.writerow(dict_for_writerow)
-
+    print('kofe')
     if(os.path.isfile(f'static/files/{filename}')):
+        print('chay')
         Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
 
         return True
     else:
+        print('aci chay')
         Generated_csv.objects.filter(id=row_id).update(status="Failure")
 
         return False
