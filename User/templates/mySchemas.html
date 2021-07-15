@@ -48,7 +48,12 @@
         </div>
     </div>
 
-
+<form method="post" action="{% url 'User:GenerateCSV' pk %}">
+    {% csrf_token %}
+    <input type="hidden" name="row" value="3">
+    <input type="hidden" name="row_id" value="1">
+    <button type="submit">submit</button>
+</form>
 {% endblock %}
 
 

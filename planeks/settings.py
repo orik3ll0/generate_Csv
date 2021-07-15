@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1&1j=lu2pqm+m8p71jhlvqleim5t2)8u@pcs3^emaxg%m3p4xy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '*',
@@ -139,6 +139,20 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+from celery.utils.log import get_task_logger
+logger = get_task_logger(__name__)
+
+LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+            },
+        },
+}
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = {
@@ -211,7 +225,7 @@ LOGIN_URL = 'User:login'
 LOGOUT_REDIRECT_URL = 'User:login'
 
 # CELERY STUFF
-BROKER_URL = 'redis://:pbe691c471072dedc160edb9260f2fffc43e87ee394d3a12b39024aa8aaa2bfd8@ec2-99-80-6-236.eu-west-1.compute.amazonaws.com:17919'
+BROKER_URL = 'redis://:p220b7ed75d437bbacec0f20435ec54465f903db55afd11e2b9cb3f5b2ce27ae1@ec2-52-16-195-163.eu-west-1.compute.amazonaws.com:32269'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_ACCEPT_CONTENT = ['application/json']

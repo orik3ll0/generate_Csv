@@ -1,2 +1,2 @@
 web: gunicorn planeks.wsgi
-worker: celery -A planeks worker -B --loglevel=info
+worker: celery -A project_name worker -l debug -E
