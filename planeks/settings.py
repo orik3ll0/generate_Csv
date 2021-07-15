@@ -211,7 +211,7 @@ LOGIN_URL = 'User:login'
 LOGOUT_REDIRECT_URL = 'User:login'
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
+BROKER_URL = 'redis://redis-12104.c268.eu-west-1-2.ec2.cloud.redislabs.com:12104'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_ACCEPT_CONTENT = ['application/json']
