@@ -61,12 +61,15 @@ def create_task(dict, separator, stringCharacter, row, row_id):
     print('kofe')
     if(os.path.isfile(f'static/files/{filename}')):
         print('chay')
-        Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
+        print(row_id)
+        print(filename)
+        gen_table_update = Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
+        print(gen_table_update)
         print('chay nogulnan')
         return True
     else:
         print('aci chay')
-        Generated_csv.objects.filter(id=row_id).update(status="Failure")
+        gen_table_update = Generated_csv.objects.filter(id=row_id).update(status="Failure")
 
         return False
 
