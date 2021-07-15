@@ -182,7 +182,7 @@ def sleep_to_check_status(task, row):
     print('Hello')
     print(task.state)
     print(task.status)
-    print(task.State())
+
     if task.state == "PENDING":
         sleep(5)
         return sleep_to_check_status(task, row)
