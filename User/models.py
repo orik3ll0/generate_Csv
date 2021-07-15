@@ -68,5 +68,5 @@ class Generated_csv(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.schema_id)
+        return str(self.id)
 
