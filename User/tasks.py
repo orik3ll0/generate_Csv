@@ -63,16 +63,14 @@ def create_task(dict, separator, stringCharacter, row, row_id):
         print('chay')
         print(row_id)
         print(filename)
-        gen_tbl = Generated_csv.objects.filter(schema_id=row_id)
-        gen_tbl.path=filename
-        gen_tbl.status="Ready"
-        gen_tbl.save()
+        gen_tbl = Generated_csv.objects.filter(schema_id=row_id).update(path=filename, status="Ready")
+
 
         print('chay nogulnan')
         return True
     else:
         print('aci chay')
-        gen_table_update = Generated_csv.objects.filter(id=row_id).update(status="Failure")
+        gen_table_update = Generated_csv.objects.filter(schema_id=row_id).update(status="Failure")
 
         return False
 
