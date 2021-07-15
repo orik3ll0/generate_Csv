@@ -141,6 +141,7 @@ def MySchemaView(request, pk):
 @login_required
 def GenerateView(request, pk):
     if request.POST:                                    #checking if request is POST
+        print(request.POST)
         row = request.POST.get("row")                   #getting inserted row count
         row_id = request.POST.get("row_id")             #getting inserted row count
 
@@ -159,21 +160,22 @@ def GenerateView(request, pk):
                 'order': column.order
                 }
             )
-
+        print('i am here')
         #task for celery. Sending dictionary, separator, string Character and row count
         task = create_task.delay(data_to_send_dict, str(schema.separator.prefix), str(schema.stringCharacter.prefix), row, row_id)
-
+        print('now here')
         #Checking for status every 5 seconds
         result = sleep_to_check_status(task, row)
-
+        print('now now am here')
         generated_csv_rows = Generated_csv.objects.filter(schema_id=pk)
-
+        print('find me')
         context = {'generated_csv_rows': generated_csv_rows}
         return render(request, 'generated_data.html', context)
 
 
 def sleep_to_check_status(task, row):
     """checking status if pending, on success sends json with state"""
+    print('Hello')
     if task.state == "PENDING":
         sleep(5)
         return sleep_to_check_status(task, row)
@@ -198,6 +200,6 @@ def CreateRow(request, pk):
             schema.save()
         else:
             print(form.errors)
-
+        print(schema.id)
         myhtml = """<tr><th scope="row">{0}</th> <td>{1}</td> <td><span class="badge badge-secondary">Processing</span></td> <td></td></tr>""".format(schema.id, datetime.date(schema.date_created))
         return JsonResponse({"created_row_id": schema.id, "myhtml":myhtml})

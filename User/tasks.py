@@ -12,13 +12,13 @@ import os.path
 @shared_task
 def create_task(dict, separator, stringCharacter, row, row_id):
     fake = Faker('en_US')
-
+    print('kuku')
     list_of_headers = []
     for key in dict:
         list_of_headers.append(dict[key]['columnName'])
-
+    print('hey')
     filename = f'{time.mktime(datetime.now().timetuple())}{row}.csv'        #creating file name
-
+    print('marojna')
     with open(f'static/files/{filename}', 'wt') as csvFile:
         writer = csv.DictWriter(csvFile, delimiter=separator, quotechar=stringCharacter, quoting=csv.QUOTE_ALL, fieldnames=list_of_headers)
         writer.writeheader()
