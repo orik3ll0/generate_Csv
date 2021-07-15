@@ -184,9 +184,6 @@ def sleep_to_check_status(task, row):
     """checking status if pending, on success sends json with state"""
     print('sss')
     print(task.task_id)
-    result = AsyncResult(task.task_id)
-    pendir = result.get()
-    print(pendir)
 
     if task.state == "PENDING":
         sleep(5)

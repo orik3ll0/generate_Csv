@@ -62,7 +62,7 @@ def create_task(dict, separator, stringCharacter, row, row_id):
     if(os.path.isfile(f'static/files/{filename}')):
         print('chay')
         Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
-
+        print('chay nogulnan')
         return True
     else:
         print('aci chay')
