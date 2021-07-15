@@ -1,0 +1,15 @@
+{% load static %}
+{% for row in generated_csv_rows %}
+    <tr>
+        <th scope="row">{{ row.id }}</th>
+        <td>{{ row.date_created|date:"Y-m-d" }}</td>
+        <td>
+            {% if row.status == 'Processing' %}
+                <span class="badge badge-secondary">{{ row.status }}</span></td>
+            {% else %}
+                <span class="badge badge-success">{{ row.status }}</span></td>
+            {% endif %}
+        </td>
+        <td> {% if row.status == 'Ready' %} <a href="{% static  '/files/'|add:row.path %}"> Download </a>{% endif %}   </td>
+    </tr>
+{% endfor %}

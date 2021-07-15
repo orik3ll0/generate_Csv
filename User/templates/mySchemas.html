@@ -1,0 +1,88 @@
+{% extends 'layouts/content.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="mx-5 mt-4">
+        <div class="row col-sm-12 col-md-10">
+            <div class="col-sm-12 col-md-6">
+                <h3>Data sets</h3>
+            </div>
+            <div class="col-sm-12 col-md-6 pr-0">
+                <div class="form-inline pull-right flex-end">
+                    <span class=" mr-3">Rows: </span>
+                    <input type="number" id="row_count" class="form-control mr-3 col-sm-3">
+                    <button type="button" class="btn btn-success" id="generate">Generate data</button>
+                </div>
+            </div>
+
+            <table class="table table-bordered mt-5">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody id="table_body">
+                {% for row in generated_csv_rows %}
+                    <tr>
+                        <th scope="row">{{  row.id }}</th>
+                        <td>{{ row.date_created|date:"Y-m-d" }}</td>
+                        <td>
+                            {% if row.status == 'Processing' %}
+                                <span class="badge badge-secondary">{{ row.status }}</span></td>
+                            {% else %}
+                                <span class="badge badge-success">{{ row.status }}</span></td>
+                            {% endif %}
+                        <td>
+                            {% if row.status == 'Ready' %}
+                                <a href="{% static '/files/'|add:row.path  %}" download="">Download</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascript %}
+<script  src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script>
+    $(document).on('click', '#generate', function () {
+        var pk ={{ pk }}
+
+        $.ajax({
+            url: '{% url 'User:CreateRow' pk %}',
+            data: {
+                row: $('#row_count').val(),
+                schema_id: pk,
+                status: 'Processing',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            method: 'POST',
+            success:function(data) {
+                $( '#table_body' ).append( data.myhtml );
+
+                $.ajax({
+                    url: '{% url 'User:GenerateCSV' pk %}',
+                    data: {row: $('#row_count').val(), row_id: data.created_row_id, csrfmiddlewaretoken: '{{ csrf_token }}'},
+                    method: 'POST',
+                    success:function(data) {
+                        $('#table_body').html(data)
+                    }
+                })
+
+            }
+        })
+
+    });
+</script>
+
+{% endblock %}

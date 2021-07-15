@@ -1,0 +1,75 @@
+#logo {
+    height: 70px;
+    width: auto;
+}
+
+body {
+    background-color: #fff;
+}
+
+#total-orders {
+    background-color: #4cb4c7;
+}
+
+#orders-delivered {
+    background-color: #7abecc;
+}
+
+#orders-pending {
+    background-color: #7CD1C0;
+}
+
+.card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}
+
+.hello-msg {
+    font-size: 18px;
+    color: #a5a5a5;
+    margin-right: 20px;
+}
+
+.light-gray {
+    color: #aca5ad;
+}
+
+.pull-right{
+    float: right;
+}
+
+.color-red{
+    color: red;
+}
+
+.pl-15{
+    padding-right: 15px;
+}
+
+.display_none{
+    display: none;
+}
+
+.alert_display{
+    display: none;
+}
+
+.flex-end{
+    justify-content: flex-end;
+}
+
+.btn-link{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #ee0000;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.btn-link:hover{
+    text-decoration: underline;
+}

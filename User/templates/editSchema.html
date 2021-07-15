@@ -1,0 +1,272 @@
+{% extends 'layouts/content.html' %}
+
+{% block content %}
+
+    <div class="mx-5 mt-4">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row col-sm-12 col-md-10">
+
+                <div class="col-sm-6">
+                    <h3>Edit schema</h3>
+                </div>
+                <div class="col-sm-6 pr-0">
+                    <button type="submit" class="btn btn-primary pull-right">Update</button>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label for="{{ form.schemaTitle.id_for_label }}">{{ form.schemaTitle.label }}</label>
+                    {{ form.schemaTitle }}
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label for="{{ form.separator.id_for_label }}">{{ form.separator.label }}</label>
+                    {{ form.separator }}
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label for="{{ form.stringCharacter.id_for_label }}">{{ form.stringCharacter.label }}</label>
+                    {{ form.stringCharacter }}
+                </div>
+            </div>
+
+
+            <div class=" col-sm-12 col-md-10 mt-4">
+                <div class="col-sm-12">
+                    <h3>Schema columns</h3>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-10 ready_rows mt-4">
+
+                {% for column in schema.schemaColumns.all %}
+
+                    <div class="new_row col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-goup">
+                                    <label for="{{ column.columnName.id }}">Column name</label>
+                                    <input type="text" class="form-control" name="columnName" id="columnName" value="{{ column.columnName }}" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-goup">
+                                    <label for="{{ column.type.id }}">Type {{ column.type }}</label>
+                                    <select class="form-control" name="type" id="type">
+                                        {% for option in input_types %}
+                                            <option value="{{ option.id }}" {% if option.id == column.type.id %} selected {% endif %} >{{ option.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-1 display_none interval">
+                                <div class="form-group">
+                                    <label for="{{ column.from_int.id }}">From</label>
+                                    <input class="form-control" type="number" name="from_int" id="from_int" value="{{ column.from_int }}" />
+                                </div>
+                            </div>
+                            <div class="col-sm-1 display_none interval">
+                                <div class="form-group">
+                                    <label for="{{ column.to_int.id }}">To</label>
+                                    <input class="form-control" type="number" name="to_int" id="to_int" value="{{ column.to_int }}" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2 display_none sentence">
+                                <div class="form-group">
+                                    <label for="{{ column.sentence.id }}">Sentence</label>
+                                    <input class="form-control" type="number" name="sentence" id="sentence" value="{{ column.sentence }}" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2 empty"></div>
+
+                            <div class="col-sm-1"></div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="{{ column.order.id }}">Order</label>
+                                    <input class="form-control" type="number" name="order" id="order" value="{{ column.order }}" />
+                                </div>
+                            </div>
+                            <div class="col-sm-1 my-auto">
+                                <span class="deleteRow color-red ">Delete</span>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </form>
+
+        <div class="row border mr-2 ml-2 mt-4 p-2 row_create col-md-10">
+            <div class="new_row col-sm-12">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-goup">
+                            <label for="{{ formColumns.columnName.id_for_label }}">{{ formColumns.columnName.label }}</label>
+                            {{ formColumns.columnName }}
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-goup">
+                            <label for="{{ formColumns.type.id_for_label }}">{{ formColumns.type.label }}</label>
+                            {{ formColumns.type }}
+                        </div>
+                    </div>
+                    <div class="col-sm-1 display_none interval">
+                        <div class="form-group">
+                            <label for="{{ formColumns.from_int.id_for_label }}">{{ formColumns.from_int.label }}</label>
+                            {{ formColumns.from_int }}
+                        </div>
+                    </div>
+                    <div class="col-sm-1 display_none interval">
+                        <div class="form-group">
+                            <label for="{{ formColumns.to_int.id_for_label }}">{{ formColumns.to_int.label }}</label>
+                            {{ formColumns.to_int }}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 display_none sentence">
+                        <div class="form-group">
+                            <label for="{{ formColumns.sentence.id_for_label }}">{{ formColumns.sentence.label }}</label>
+                            {{ formColumns.sentence }}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 empty"></div>
+
+                    <div class="col-sm-1"></div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="{{ formColumns.order.id_for_label }}">{{ formColumns.order.label }}</label>
+                            {{ formColumns.order }}
+                        </div>
+                    </div>
+                    <div class="col-sm-1 my-auto">
+                        <span class="deleteRow color-red ">Delete</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="alert alert-danger alert_display" role="alert">
+                    Please fill all fields
+                </div>
+            </div>
+            <div class="col-sm-12 ">
+                <button type="button" class="btn btn-primary" id="addrow">Add column</button>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    <script>
+
+        $( document ).ready(function() {
+            $('[name=type]').each(function() {                              //checking each input to show extra inputs
+                  if($(this).val() == 8){
+                      $(this).closest('.new_row').find('.interval').show();
+                      $(this).closest('.new_row').find('.empty').hide();
+                  }else if($(this).val() == 7){
+                      $(this).closest('.new_row').find('.sentence').show();
+                      $(this).closest('.new_row').find('.empty').hide();
+                  }
+
+            });
+        });
+        //Add new inputs row for new column
+        $(document).on('click', '#addrow', function () {
+
+            //getting inputs values
+            var columnName = $(this).closest('.row_create').find('#columnName').eq(0).val();
+            var type = $(this).closest('.row_create').find('#type').eq(0).val();
+            var order = $(this).closest('.row_create').find('#order').eq(0).val();
+            var from_int = $(this).closest('.row_create').find('#from_int').eq(0).val();
+            var to_int = $(this).closest('.row_create').find('#to_int').eq(0).val();
+            var sentence = $(this).closest('.row_create').find('#sentence').eq(0).val();
+
+            //getting new row html
+            var html = $($(this).closest('.row_create').find('.new_row')[0].outerHTML);
+
+            //Seting written data to dublicate row
+            $(html).find('#columnName').val(columnName);    //column name input value
+            $(html).find('#type').val(type);                //type choice value
+            $(html).find('#order').val(order);              //order number value
+
+            if (from_int != '') {                            //checking if "from_int" input is not empty
+                $(html).find('#from_int').val(from_int);    //getting "from_int" input value
+            }
+            if (to_int != '') {                              //checking if "to_int" input is not empty
+                $(html).find('#to_int').val(to_int);        //getting "to_int" input value
+            }
+            if (sentence != '') {                            //checking if "sentence" input is not empty
+                $(html).find('#sentence').val(sentence);    //getting "sentence" input value
+            }
+
+            //validation for row create. Checking if inputs are filled.
+            //Shows alert if inputs are not filled, otherwise add new row to columns list
+            if (columnName.length > 0 && type != 0) {
+                if (type == 8) {                                //if type is integer
+                    if (from_int > 0 && to_int > 0) {
+                        $(".ready_rows").append(html);
+                        $('.alert_display').hide();
+                    } else {
+                        $('.alert_display').show();
+                    }
+                } else if (type == 7) {                         //if type is text
+                    if (sentence > 0) {
+                        $(".ready_rows").append(html);
+                        $('.alert_display').hide();
+                    } else {
+                        $('.alert_display').show();
+                    }
+                } else {
+                    $(".ready_rows").append(html);
+                    $('.alert_display').hide();
+                }
+            } else {
+                $('.alert_display').show();
+            }
+        })
+
+        //To delete selected row
+        $(document).on('click', '.deleteRow', function (e) {        //function to delete row
+            e.preventDefault();
+            if ($(this).closest('.ready_rows').length) {        //checking if row is not parent
+                $(this).parents('.new_row').remove();           //removing selected row
+            }
+        })
+
+        //Show hide inputs on type change.
+        $(document).on('change', '.types', function (e) {
+            e.preventDefault();
+
+            if ($(this).val() == 8) {                                       //if type is integer show "from" "to" inputs
+                $(this).closest('.new_row').find('.interval').show();
+                $(this).closest('.new_row').find('.changable').val('');
+                $(this).closest('.new_row').find('.sentence').hide();
+                $(this).closest('.new_row').find('.empty').hide();
+            } else if ($(this).val() == 7) {                                //if type is text show "sentence" input
+                $(this).closest('.new_row').find('.changable').val('');
+                $(this).closest('.new_row').find('.interval').hide();
+                $(this).closest('.new_row').find('.sentence').show();
+                $(this).closest('.new_row').find('.empty').hide();
+            } else {                                                        //if else close all extra inputs
+                $(this).closest('.new_row').find('.empty').show();
+                $(this).closest('.new_row').find('.changable').val('');
+                $(this).closest('.new_row').find('.display_none').hide();
+            }
+        })
+    </script>
+
+{% endblock %}
