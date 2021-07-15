@@ -183,7 +183,8 @@ def GenerateView(request, pk):
 def sleep_to_check_status(task, row):
     """checking status if pending, on success sends json with state"""
     result = AsyncResult(id=task.task_id)
-    result.get()
+    pendir = result.get()
+    print(pendir)
 
     if task.state == "PENDING":
         sleep(5)
