@@ -161,6 +161,10 @@ def GenerateView(request, pk):
                 }
             )
         print('i am here')
+        print('i am here2')
+
+        tasktest = task1.delay()
+        print('past this')
         #task for celery. Sending dictionary, separator, string Character and row count
         task = create_task.delay(data_to_send_dict, str(schema.separator.prefix), str(schema.stringCharacter.prefix), row, row_id)
         print('now here')

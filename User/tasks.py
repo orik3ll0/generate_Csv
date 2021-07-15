@@ -8,6 +8,10 @@ import csv
 import random
 import os.path
 
+@shared_task
+def task1():
+    print('helloo')
+    return True
 
 @shared_task
 def create_task(dict, separator, stringCharacter, row, row_id):
