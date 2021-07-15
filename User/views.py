@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import JsonResponse
 from datetime import date
+
+from celery.result import AsyncResult
+
 from time import sleep
 from User.forms import *
 from User.tasks import *
@@ -179,9 +182,8 @@ def GenerateView(request, pk):
 
 def sleep_to_check_status(task, row):
     """checking status if pending, on success sends json with state"""
-    print('Hello')
-    print(task.state)
-    print(task.status)
+    result = AsyncResult(id=task.task_id)
+    result.get()
 
     if task.state == "PENDING":
         sleep(5)
