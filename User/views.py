@@ -180,6 +180,8 @@ def GenerateView(request, pk):
 def sleep_to_check_status(task, row):
     """checking status if pending, on success sends json with state"""
     print('Hello')
+    print(task.state)
+    print(task.State())
     if task.state == "PENDING":
         sleep(5)
         return sleep_to_check_status(task, row)
