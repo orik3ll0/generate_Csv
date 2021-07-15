@@ -63,7 +63,7 @@ def create_task(dict, separator, stringCharacter, row, row_id):
         print('chay')
         print(row_id)
         print(filename)
-        gen_tbl = Generated_csv.objects.get(id=row_id)
+        gen_tbl = Generated_csv.objects.get(schema_id=row_id)
         gen_tbl.path=filename
         gen_tbl.status="Ready"
         gen_tbl.save()
