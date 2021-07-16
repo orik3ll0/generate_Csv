@@ -12,8 +12,6 @@ import os
 from planeks import settings
 
 
-
-
 @shared_task
 def create_task(dict, separator, stringCharacter, row, row_id):
     fake = Faker('en_US')
