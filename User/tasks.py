@@ -6,28 +6,43 @@ from User.models import Generated_csv
 import time
 import csv
 import random
-import os.path
+import os.path as op
+import boto3
+import os
+from planeks import settings
 
-@shared_task
-def task1():
-    print('helloo')
-    return True
+
+
 
 @shared_task
 def create_task(dict, separator, stringCharacter, row, row_id):
     fake = Faker('en_US')
-    print('kuku')
+
+    print(settings.BASE_DIR)
+    print(os.path.abspath(os.curdir))
+    s3 = boto3.client(
+        's3',
+        region_name='us-east-2',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    )
+
     list_of_headers = []
     for key in dict:
         list_of_headers.append(dict[key]['columnName'])
-    print('hey')
+
     filename = f'{time.mktime(datetime.now().timetuple())}{row}.csv'        #creating file name
-    print('marojna')
-    with open(f'static/files/{filename}', 'wt') as csvFile:
-        print('pirojna')
+
+
+    file_path = op.abspath(op.join(__file__, op.pardir, op.pardir, '/tmp/', filename))
+
+
+    with open(f'./tmp/{filename}', 'wt') as csvFile:
+
         writer = csv.DictWriter(csvFile, delimiter=separator, quotechar=stringCharacter, quoting=csv.QUOTE_ALL, fieldnames=list_of_headers)
+
         writer.writeheader()
-        print('lokom')
+
         for i in range(int(row)):
 
             dict_for_writerow = {}
@@ -58,19 +73,16 @@ def create_task(dict, separator, stringCharacter, row, row_id):
                     dict_for_writerow.update({dict[key]['columnName']: fake.date()})
 
             writer.writerow(dict_for_writerow)
-    print('kofe')
-    if(os.path.isfile(f'static/files/{filename}')):
-        print('chay')
-        print(row_id)
-        print(filename)
-        tebl = Generated_csv.objects.all()
-        print(tebl)
 
 
-        print('chay nogulnan')
+    s3.upload_file(f'./tmp/{filename}','csv-generator1', f'files/{filename}')
+
+    if(op.isfile(f'./tmp/{filename}')):
+
+        Generated_csv.objects.filter(id=row_id).update(path=filename, status="Ready")
+
         return True
     else:
-        print('aci chay')
         Generated_csv.objects.filter(id=row_id).update(status="Failure")
 
         return False

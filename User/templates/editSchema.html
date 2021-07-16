@@ -237,6 +237,10 @@
             } else {
                 $('.alert_display').show();
             }
+
+            $('html, body').animate({
+                    scrollTop: $(".row_create").offset().top
+            }, 500);
         })
 
         //To delete selected row

@@ -115,6 +115,9 @@
 
     <script>
 
+        {#$('#.').animate({#}
+        {#scrollTop: $('#row_create').get(0).scrollHeight}, 2000); #}
+
         //Add new inputs row for new column
         $(document).on('click', '#addrow', function () {
 
@@ -168,6 +171,11 @@
             } else {
                 $('.alert_display').show();
             }
+
+            $('html, body').animate({
+                    scrollTop: $(".row_create").offset().top
+            }, 500);
+
         })
 
         //To delete selected row

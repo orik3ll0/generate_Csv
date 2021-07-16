@@ -61,12 +61,12 @@ class Schema(models.Model):
         return self.schemaTitle
 
 class Generated_csv(models.Model):
-    schema_id = models.ForeignKey(Schema, to_field='id', on_delete=models.CASCADE)
+    schema_id = models.ForeignKey(Schema, to_field='id',  on_delete=models.CASCADE)
     row = models.IntegerField()
     status = models.CharField(max_length=50)
     path = models.CharField(max_length=255, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.schema_id)
 
